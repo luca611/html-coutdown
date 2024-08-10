@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>count down</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+        }
+        
+        #countdown {
+            width: 50%;
+            margin: 40px auto;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        input[type="number"] {
+            border-radius: 6px;
+            width: 24%;
+            height: 30px;
+            margin: 10px;
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #444;
+            background-color: #444;
+            color: #fff;
+        }
+        
+        button {
+            width: 28%;
+            height: 4rem;
+            margin: 10px;
+            padding: 1rem;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background-color: #666;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #555;
+        }
+        
+        #timer {
+            width: 100%;
+            height: auto;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .cont {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #fff;
+            background-color: #414141;
+            width: 24%;
+            aspect-ratio: 1/1;
+            border: 1px solid #444;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown">
+        <input type="number" id="hours" placeholder="Hours">
+        <input type="number" id="minutes" placeholder="Minutes">
+        <input type="number" id="seconds" placeholder="Seconds">
+        <button id="start" onclick="startCountdown()">Start Countdown</button>
+        <div id="timer" class="hidden">
+            <span id="h" class="cont"></span>
+            <span id="m" class="cont"></span>
+            <span id="s" class="cont"></span>
+        </div>
+    </div>
+    
+    <script>
+        function startCountdown() {
+            document.getElementById("timer").classList.remove("hidden");
+            
+            document.getElementById("hours").classList.add("hidden");
+            document.getElementById("minutes").classList.add("hidden");
+            document.getElementById("seconds").classList.add("hidden");
+            document.getElementById("start").classList.add("hidden");
+            
+            var hours = parseInt(document.getElementById("hours").value) || 0;
+            var minutes = parseInt(document.getElementById("minutes").value) || 0;
+            var seconds = parseInt(document.getElementById("seconds").value) || 0;
+    
+            var totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    
+            var countdownInterval = setInterval(function() {
+                var hoursLeft = Math.floor(totalSeconds / 3600);
+                var minutesLeft = Math.floor((totalSeconds % 3600) / 60);
+                var secondsLeft = totalSeconds % 60;
+    
+                document.getElementById("h").innerHTML = hoursLeft + "h ";
+                document.getElementById("m").innerHTML = minutesLeft + "m ";
+                document.getElementById("s").innerHTML = secondsLeft + "s";
+    
+                if (totalSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById("timer").innerHTML = "Countdown Complete!";
+                } else {
+                    totalSeconds--;
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
